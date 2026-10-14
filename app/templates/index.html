@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MachineGuard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            MachineGuard
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="hero">
+
+        <div class="hero-content">
+
+            <p class="tag">
+                AI-POWERED PREDICTIVE MAINTENANCE
+            </p>
+
+            <h1>
+                Predict machine failures
+                <span>before they happen.</span>
+            </h1>
+
+            <p class="description">
+
+                MachineGuard uses machine sensor data and
+                XGBoost machine learning to estimate failure
+                risk and identify machines requiring attention.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/dashboard"
+                   class="btn primary">
+
+                    Open Dashboard
+
+                </a>
+
+                <a href="/dashboard"
+                   class="btn secondary">
+
+                    View Machines
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+            <div class="status-dot"></div>
+
+            <p>Machine Health</p>
+
+            <h2>AI Monitoring</h2>
+
+            <div class="mini-line"></div>
+
+            <div class="hero-stat">
+
+                <span>Prediction Model</span>
+
+                <strong>XGBoost</strong>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <span>Purpose</span>
+
+                <strong>Failure Detection</strong>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <h3>Failure Prediction</h3>
+
+            <p>
+                Predict the probability of machine failure
+                using real sensor measurements.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>Risk Monitoring</h3>
+
+            <p>
+                Categorize machines into low, medium and
+                high-risk categories.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>AI Decision Support</h3>
+
+            <p>
+                Help maintenance teams identify machines
+                that require attention.
+            </p>
+
+        </div>
+
+    </section>
+
+
+</body>
+
+</html>

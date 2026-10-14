@@ -1,0 +1,1 @@
+console.log("MachineGuard charts module loaded.");

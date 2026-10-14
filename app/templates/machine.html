@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MachineGuard Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        MachineGuard
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="machine-page">
+
+
+    {% if machine is none %}
+
+    <!-- Manual Prediction -->
+
+    <section class="prediction-form">
+
+        <p class="tag">
+            AI FAILURE PREDICTION
+        </p>
+
+        <h1>
+            Analyze a Machine
+        </h1>
+
+        <p>
+            Enter the machine's sensor measurements.
+        </p>
+
+
+        <form action="/predict"
+              method="POST">
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Air Temperature (K)
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="air_temperature"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Process Temperature (K)
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="process_temperature"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Rotational Speed (rpm)
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="rotational_speed"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Torque (Nm)
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="torque"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Tool Wear (min)
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="tool_wear"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Machine Type
+                    </label>
+
+                    <select name="machine_type"
+                            required>
+
+                        <option value="L">
+                            L
+                        </option>
+
+                        <option value="M">
+                            M
+                        </option>
+
+                        <option value="H">
+                            H
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn primary">
+
+                Predict Failure Risk
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% else %}
+
+    <!-- Existing Machine -->
+
+    <section class="machine-header">
+
+        <div>
+
+            <p class="tag">
+                MACHINE DETAILS
+            </p>
+
+            <h1>
+                Machine #{{ machine["UDI"] }}
+            </h1>
+
+            <p>
+                Product ID: {{ machine["Product ID"] }}
+            </p>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    {% if risk is defined %}
+
+    <!-- Prediction Result -->
+
+    <section class="prediction-result">
+
+        <div class="risk-display">
+
+            <p>
+                FAILURE RISK
+            </p>
+
+            <h2>
+                {{ risk }}%
+            </h2>
+
+            <span class="risk
+                {% if risk_level == 'High Risk' %}
+                    risk-high
+                {% elif risk_level == 'Medium Risk' %}
+                    risk-medium
+                {% else %}
+                    risk-low
+                {% endif %}
+            ">
+
+                {{ risk_level }}
+
+            </span>
+
+        </div>
+
+
+        <div class="prediction-info">
+
+            <h3>
+                Model Prediction
+            </h3>
+
+            {% if prediction == 1 %}
+
+            <p class="failure-text">
+                ⚠ Machine failure predicted
+            </p>
+
+            {% else %}
+
+            <p class="safe-text">
+                ✓ No machine failure predicted
+            </p>
+
+            {% endif %}
+
+
+            <p>
+                Prediction generated using the
+                MachineGuard XGBoost model.
+            </p>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    {% if machine is none and risk is not defined %}
+
+    <section class="info-box">
+
+        <h3>
+            Sensors used by MachineGuard
+        </h3>
+
+        <ul>
+
+            <li>Air Temperature</li>
+
+            <li>Process Temperature</li>
+
+            <li>Rotational Speed</li>
+
+            <li>Torque</li>
+
+            <li>Tool Wear</li>
+
+            <li>Machine Type</li>
+
+        </ul>
+
+    </section>
+
+    {% endif %}
+
+
+</main>
+
+</body>
+
+</html>

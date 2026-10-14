@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MachineGuard Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        MachineGuard
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="dashboard">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="tag">
+                MACHINE MONITORING
+            </p>
+
+            <h1>
+                Machine Dashboard
+            </h1>
+
+            <p>
+                AI-generated machine failure risk assessment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <span>Total Machines</span>
+
+            <strong>
+                {{ total_machines }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card high">
+
+            <span>High Risk</span>
+
+            <strong>
+                {{ high_risk }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card medium">
+
+            <span>Medium Risk</span>
+
+            <strong>
+                {{ medium_risk }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card low">
+
+            <span>Low Risk</span>
+
+            <strong>
+                {{ low_risk }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- Machine Table -->
+
+    <section class="table-container">
+
+        <div class="table-header">
+
+            <h2>
+                Highest Risk Machines
+            </h2>
+
+            <input
+                type="text"
+                id="machineSearch"
+                placeholder="Search machine..."
+            >
+
+        </div>
+
+
+        <table id="machineTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Machine ID</th>
+
+                    <th>Type</th>
+
+                    <th>Temperature</th>
+
+                    <th>Torque</th>
+
+                    <th>Tool Wear</th>
+
+                    <th>Failure Risk</th>
+
+                    <th>Status</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for machine in machines %}
+
+                <tr>
+
+                    <td>
+                        {{ machine["UDI"] }}
+                    </td>
+
+                    <td>
+                        {{ machine["Type"] }}
+                    </td>
+
+                    <td>
+                        {{ machine["Air temperature [K]"] | round(2) }}
+                    </td>
+
+                    <td>
+                        {{ machine["Torque [Nm]"] | round(2) }}
+                    </td>
+
+                    <td>
+                        {{ machine["Tool wear [min]"] }}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            {{ machine["Risk"] }}%
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <span class="risk
+                            {% if machine['Risk_Level'] == 'High Risk' %}
+                                risk-high
+                            {% elif machine['Risk_Level'] == 'Medium Risk' %}
+                                risk-medium
+                            {% else %}
+                                risk-low
+                            {% endif %}
+                        ">
+
+                            {{ machine["Risk_Level"] }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="/machine/{{ machine['UDI'] }}"
+                            class="view-btn">
+
+                            View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>
